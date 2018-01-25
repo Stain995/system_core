@@ -370,9 +370,16 @@ bool Service::Start() {
         if (rc == 0) {
             scon = ret_scon;
             free(ret_scon);
+
         }
-        if (rc == 0 && scon == mycon)
+#if 0
+        if (rc == 0 && scon == mycon) {
             ERROR("Service %s does not have a SELinux domain defined.\n", name_.c_str());
+        free(mycon);
+        free(fcon);
+        return false;
+        }
+#endif
         free(mycon);
         free(fcon);
         if (rc < 0) {
